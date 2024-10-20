@@ -1,5 +1,7 @@
-import { Moon, Sun } from "lucide-react"; // Import both icons
-import { useTheme } from './ThemeContext'; // Import the custom hook
+"use client";
+
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from './ThemeContext';
 
 export default function Header() {
     const { isDarkMode, toggleTheme } = useTheme(); // Use the theme context
@@ -10,10 +12,10 @@ export default function Header() {
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-bold">Where in the world?</h1>
                     <button
-                        onClick={toggleTheme} // Add the click handler
-                        className="inline-flex gap-2 items-center p-2 rounded bg-gray-200 dark:bg-gray-700 transition-colors"
+                        onClick={toggleTheme}
+                        className="inline-flex gap-2 items-center p-2"
                     >
-                        {isDarkMode ? <Sun /> : <Moon />} {/* Toggle icon based on theme */}
+                        {isDarkMode ? <Sun /> : <Moon />}
                         <span className="text-base font-semibold">
                             {isDarkMode ? 'Light Mode' : 'Dark Mode'}
                         </span>
