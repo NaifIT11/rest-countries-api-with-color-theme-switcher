@@ -4,7 +4,7 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from './ThemeContext';
 
 export default function Header() {
-    const { isDarkMode, toggleTheme } = useTheme(); // Use the theme context
+    const { isDarkMode, toggleTheme } = useTheme();
 
     return (
         <div className="py-4">
