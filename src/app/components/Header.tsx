@@ -7,7 +7,7 @@ export default function Header() {
     const { isDarkMode, toggleTheme } = useTheme();
 
     return (
-        <div className="py-4">
+        <div className="py-4 box-shadow">
             <div className="container mx-auto px-6">
                 <div className="flex items-center justify-between">
                     <h1 className="text-xl font-bold">Where in the world?</h1>
