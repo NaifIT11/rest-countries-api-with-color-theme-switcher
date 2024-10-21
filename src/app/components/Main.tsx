@@ -1,3 +1,5 @@
+"use client"
+
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 
@@ -20,11 +22,9 @@ function MainHeader() {
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value;
-
-        // Update the search query parameter
         router.push({
             pathname: router.pathname,
-            query: { ...query, search: value }, // Update or add the search parameter
+            query: { ...query, search: value },
         });
     };
 
@@ -70,7 +70,7 @@ function MainContent() {
         };
 
         fetchData();
-    }, [query.search]); // Re-fetch data when the search query changes
+    }, [query.search]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
