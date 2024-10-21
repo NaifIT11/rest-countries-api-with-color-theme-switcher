@@ -137,7 +137,7 @@ function MainContent() {
         <p>No results found.</p>
       ) : (
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:grid-cols-3">
-          {data.map((item: any) => (
+          {data.map((item: Country) => (
             <li
               key={item.name}
               className="bg-[#fff] flex flex-col dark:bg-background"
