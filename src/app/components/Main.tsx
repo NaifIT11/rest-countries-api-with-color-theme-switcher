@@ -86,7 +86,7 @@ function MainContent() {
       </div>
     );
   if (error) return <div>Error: {error}</div>;
-
+  let id = 0;
   return (
     <div>
       {data.length === 0 ? (
@@ -95,7 +95,7 @@ function MainContent() {
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:grid-cols-3">
           {data.map((item) => (
             <li
-              key={item.id}
+              key={id++}
               className="bg-[#fff] flex flex-col dark:bg-background"
             >
               <div className="w-full">
