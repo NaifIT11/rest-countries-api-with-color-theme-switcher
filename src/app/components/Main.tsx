@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import Image from "next/image";
+import { Loader } from "lucide-react";
 
 export default function Main() {
     return (
@@ -73,7 +75,7 @@ function MainContent() {
         fetchData();
     }, [searchQuery]);
 
-    if (loading) return <div>Loading...</div>;
+    if (loading) return <div className="self-center"><Loader className="animate-spin"/></div>;
     if (error) return <div>Error: {error}</div>;
 
     return (
@@ -81,9 +83,27 @@ function MainContent() {
             {data.length === 0 ? (
                 <p>No results found.</p>
             ) : (
-                <ul>
+                <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 sm:grid-cols-2">
                     {data.map((item) => (
-                        <li key={item.id}>{item.name}</li>
+                        <li key={item.id} className="flex flex-col">
+                            <div className="w-full">
+                                <Image width={100} height={100} className="w-full" src={item.flag} />
+                            </div>
+                            <div className="p-4">
+                                <h1 className="mb-3 text-xl">{item.name}</h1>
+                                <div className="flex flex-col gap-2">
+                                    <h3 className="text-sm">
+                                        population: {item.population}
+                                    </h3>
+                                    <h3 className="text-sm">
+                                        region: {item.region}
+                                    </h3>
+                                    <h3 className="text-sm">
+                                        capital: {item.capital}
+                                    </h3>
+                                </div>
+                            </div>
+                        </li>
                     ))}
                 </ul>
             )}
