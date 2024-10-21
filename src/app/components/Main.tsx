@@ -49,7 +49,7 @@ function MainHeader() {
 function MainContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-  const [data, setData] = useState<any[]>([]);
+  const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
