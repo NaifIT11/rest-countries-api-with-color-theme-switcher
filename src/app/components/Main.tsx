@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/router";
@@ -27,7 +27,6 @@ function MainHeader() {
             query: { ...query, search: value },
         });
     };
-
     return (
         <div className="flex items-center justify-between">
             <input
@@ -35,7 +34,7 @@ function MainHeader() {
                 onChange={handleInputChange}
                 name="search"
                 className="px-7 py-3 outline-none"
-                placeholder="search for a country ..."
+                placeholder="Search for a country ..."
                 defaultValue={query.search || ""}
             />
         </div>
@@ -45,7 +44,7 @@ function MainHeader() {
 function MainContent() {
     const router = useRouter();
     const { query } = router;
-    const [data, setData] = useState<any[]>([]); // Replace `any` with the actual data type
+    const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
@@ -56,21 +55,22 @@ function MainContent() {
             setError(null);
 
             try {
-                const response = await fetch(`/api/contries?search=${searchQuery}`);
+                const response = await fetch(`/api/countries?search=${searchQuery}`);
                 if (!response.ok) {
                     throw new Error("Failed to fetch data");
                 }
                 const result = await response.json();
                 setData(result);
-            } catch (err) {
+            } catch (err: any) {
                 setError(err.message);
             } finally {
                 setLoading(false);
             }
         };
-
-        fetchData();
-    }, [query.search]);
+        if (router.isReady) {
+            fetchData();
+        }
+    }, [query.search, router.isReady]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
@@ -82,7 +82,7 @@ function MainContent() {
             ) : (
                 <ul>
                     {data.map((item) => (
-                        <li key={item.id}>{item.name}</li> // Adjust according to your data structure
+                        <li key={item.id}>{item.name}</li>
                     ))}
                 </ul>
             )}
