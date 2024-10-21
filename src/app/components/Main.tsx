@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Image from "next/image";
 import { Loader } from "lucide-react";
@@ -10,8 +10,12 @@ export default function Main() {
     <div className="py-4 bg-main dark:bg-main">
       <div className="container mx-auto px-4">
         <div className="flex flex-col gap-4">
-          <MainHeader />
-          <MainContent />
+          <Suspense fallback={<div><Loader className="animate-spin" /></div>}>
+            <MainHeader />
+          </Suspense>
+          <Suspense fallback={<div><Loader className="animate-spin" /></div>}>
+            <MainContent />
+          </Suspense>
         </div>
       </div>
     </div>
@@ -49,7 +53,7 @@ function MainHeader() {
 function MainContent() {
   const searchParams = useSearchParams();
   const searchQuery = searchParams.get("search") || "";
-  const [data, setData] = useState([]);
+  const [data, setData] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
@@ -86,6 +90,7 @@ function MainContent() {
       </div>
     );
   if (error) return <div>Error: {error}</div>;
+
   interface Country {
     name: string;
     topLevelDomain: string[];
@@ -105,31 +110,31 @@ function MainContent() {
     nativeName: string;
     numericCode: string;
     flags: {
-        svg: string;
-        png: string;
+      svg: string;
+      png: string;
     };
     currencies: {
-        code: string;
-        name: string;
-        symbol: string;
+      code: string;
+      name: string;
+      symbol: string;
     }[];
     languages: {
-        iso639_1: string;
-        iso639_2: string;
-        name: string;
-        nativeName: string;
+      iso639_1: string;
+      iso639_2: string;
+      name: string;
+      nativeName: string;
     }[];
     translations: {
-        [key: string]: string;
+      [key: string]: string;
     };
     flag: string;
     regionalBlocs?: {
-        acronym: string;
-        name: string;
+      acronym: string;
+      name: string;
     }[];
     cioc?: string;
     independent: boolean;
-}
+  }
 
   return (
     <div>
@@ -138,10 +143,7 @@ function MainContent() {
       ) : (
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:grid-cols-3">
           {data.map((item: Country) => (
-            <li
-              key={item.name}
-              className="bg-[#fff] flex flex-col dark:bg-background"
-            >
+            <li key={item.alpha2Code} className="bg-[#fff] flex flex-col dark:bg-background">
               <div className="w-full">
                 <Image
                   width={100}
@@ -154,9 +156,9 @@ function MainContent() {
               <div className="p-4">
                 <h1 className="mb-3 text-xl">{item.name}</h1>
                 <div className="flex flex-col gap-2">
-                  <h3 className="text-sm">population: {item.population}</h3>
-                  <h3 className="text-sm">region: {item.region}</h3>
-                  <h3 className="text-sm">capital: {item.capital}</h3>
+                  <h3 className="text-sm">Population: {item.population}</h3>
+                  <h3 className="text-sm">Region: {item.region}</h3>
+                  <h3 className="text-sm">Capital: {item.capital}</h3>
                 </div>
               </div>
             </li>
