@@ -86,16 +86,15 @@ function MainContent() {
       </div>
     );
   if (error) return <div>Error: {error}</div>;
-  let id = 0;
   return (
     <div>
       {data.length === 0 ? (
         <p>No results found.</p>
       ) : (
         <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:grid-cols-3">
-          {data.map((item) => (
+          {data.map((item: any) => (
             <li
-              key={id++}
+              key={item.name}
               className="bg-[#fff] flex flex-col dark:bg-background"
             >
               <div className="w-full">
