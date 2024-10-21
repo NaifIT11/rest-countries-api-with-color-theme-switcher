@@ -49,7 +49,6 @@ function MainHeader() {
 }
 
 function MainContent() {
-    const router = useRouter();
     const searchParams = useSearchParams();
     const searchQuery = searchParams.get('search') || '';
     const [data, setData] = useState<any[]>([]);
