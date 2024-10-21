@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/router";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export default function Main() {
     return (
@@ -18,15 +18,17 @@ export default function Main() {
 
 function MainHeader() {
     const router = useRouter();
-    const { query } = router;
+    const searchParams = useSearchParams();
+    const searchQuery = searchParams.get('search') || '';
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value;
         router.push({
             pathname: router.pathname,
-            query: { ...query, search: value },
+            query: { ...Object.fromEntries(searchParams.entries()), search: value },
         });
     };
+
     return (
         <div className="flex items-center justify-between">
             <input
@@ -35,7 +37,7 @@ function MainHeader() {
                 name="search"
                 className="px-7 py-3 outline-none"
                 placeholder="Search for a country ..."
-                defaultValue={query.search || ""}
+                defaultValue={searchQuery}
             />
         </div>
     );
@@ -43,14 +45,14 @@ function MainHeader() {
 
 function MainContent() {
     const router = useRouter();
-    const { query } = router;
+    const searchParams = useSearchParams();
+    const searchQuery = searchParams.get('search') || '';
     const [data, setData] = useState<any[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         const fetchData = async () => {
-            const searchQuery = query.search || "";
             setLoading(true);
             setError(null);
 
@@ -67,10 +69,9 @@ function MainContent() {
                 setLoading(false);
             }
         };
-        if (router.isReady) {
-            fetchData();
-        }
-    }, [query.search, router.isReady]);
+
+        fetchData();
+    }, [searchQuery]);
 
     if (loading) return <div>Loading...</div>;
     if (error) return <div>Error: {error}</div>;
