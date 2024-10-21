@@ -1,12 +1,13 @@
 :root {
   --background: #ffffff;
   --foreground: #000;
-
+  --main: #F2F2F2;
 }
 
 .dark {
   --background: #202C36;
   --foreground: #fff;
+  --main: #2B3844;
 }
 
 @tailwind base;

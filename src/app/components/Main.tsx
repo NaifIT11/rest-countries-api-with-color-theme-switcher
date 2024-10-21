@@ -7,7 +7,7 @@ import { Loader } from "lucide-react";
 
 export default function Main() {
     return (
-        <div className="py-4 bg-slate-200">
+        <div className="py-4 bg-main dark:bg-main">
             <div className="container mx-auto px-4">
                 <div className="flex flex-col gap-4">
                     <MainHeader />
@@ -25,11 +25,14 @@ function MainHeader() {
 
     const handleInputChange = (e: React.FormEvent<HTMLInputElement>) => {
         const value = e.currentTarget.value;
-        router.push({
-            pathname: router.pathname,
-            query: { ...Object.fromEntries(searchParams.entries()), search: value },
-        });
+    
+        const params = new URLSearchParams(searchParams.toString());
+        params.set('search', value);
+        
+        router.push(`${window.location.pathname}?${params.toString()}`);
     };
+    
+    
 
     return (
         <div className="flex items-center justify-between">
@@ -37,7 +40,7 @@ function MainHeader() {
                 type="text"
                 onChange={handleInputChange}
                 name="search"
-                className="px-7 py-3 outline-none"
+                className="text-black dark:text-[#fff] bg-background px-7 py-3 outline-none"
                 placeholder="Search for a country ..."
                 defaultValue={searchQuery}
             />
@@ -83,9 +86,9 @@ function MainContent() {
             {data.length === 0 ? (
                 <p>No results found.</p>
             ) : (
-                <ul className="grid grid-cols-1 gap-4 md:grid-cols-3 sm:grid-cols-2">
+                <ul className="grid grid-cols-2 gap-4 md:grid-cols-4 sm:grid-cols-3">
                     {data.map((item) => (
-                        <li key={item.id} className="flex flex-col">
+                        <li key={item.id} className="bg-[#fff] flex flex-col dark:bg-background">
                             <div className="w-full">
                                 <Image width={100} height={100} className="w-full" src={item.flag} />
                             </div>
